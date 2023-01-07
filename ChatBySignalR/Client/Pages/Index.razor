@@ -7,7 +7,7 @@
     }
 </div>
 
-<div class="content px-4">
+<div class="content px-4 chat-log">
     
     <MudDialog @bind-isVisible="ShowDialog" Options="dialogOptions">
         <TitleContent>
@@ -22,33 +22,25 @@
         <DialogActions>
             <MudButton @onclick="@Chat" Variant="Variant.Filled" Color="Color.Success" Disabled="username.Length < 3" StartIcon="@Icons.Material.Filled.Chat">Start Chatting</MudButton>
         </DialogActions>
-    </MudDialog>
-        @*@if (notification != null)
-    {
-    <div class="invalid-feedback">@notification</div>
-    <small id="emailHelp" class="form-text text-muted">@notification</small>
-    }*@
-    
+    </MudDialog>    
 
     @if (chatting)
-    {
-        <MudPaper Class="d-flex flex-column justify-space-between py-6 border-2">
-
-            <MudStack Justify="Justify.FlexEnd" AlignItems="AlignItems.Stretch" Row="false" Reverse="false" Spacing="30">
-                @foreach (var item in messages)
-                {
-                    <MudPaper Class="@($"{item.CSS} pa-3")">
-                        <MudStack Row="true">
-                            <MudText class="user">@item.Username</MudText>
-                            <MudText class="msg">@item.Body</MudText>
-                        </MudStack>
-                    </MudPaper>
-                }
-            </MudStack>
-            <hr>
+    {        
+        <MudStack Justify="Justify.FlexEnd" AlignItems="AlignItems.Stretch" Row="false" Reverse="false" Spacing="30" Style="min-height: 80vh">
+            @foreach (var item in messages)
+            {
+                <MudPaper Class="@($"{item.CSS} pa-3")">
+                    <MudStack Row="true" Reverse="item.Mine">
+                        <MudText class="user">@item.Username</MudText>
+                        <MudText class="separator">|</MudText>
+                        <MudText class="msg">@item.Body</MudText>
+                    </MudStack>
+                </MudPaper>
+            }
             <MudTextField @bind-Value="message" Label="Message" HelperText="@($"Writing as: {username}")" Variant="Variant.Outlined" />
-            <MudButton @onclick="@SendAsync" Variant="Variant.Filled" Color="Color.Success" EndIcon="@Icons.Material.Filled.Send">Send</MudButton>
-        </MudPaper>
+            <MudButton OnClick="SendAsync" Variant="Variant.Filled" Color="Color.Success" EndIcon="@Icons.Material.Filled.Send">Send</MudButton>
+        </MudStack>                        
+        
     }
 </div>
 

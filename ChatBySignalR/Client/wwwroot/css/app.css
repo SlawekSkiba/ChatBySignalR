@@ -99,3 +99,13 @@ a, .btn-link {
     .loading-progress-text:after {
         content: var(--blazor-load-percentage-text, "Loading");
     }
+
+
+.chat-log .sent {
+    flex-direction: row-reverse;
+}
+
+.chat-log .user {
+    color: gray;
+    font-style: italic;
+}
