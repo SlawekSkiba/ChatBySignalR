@@ -1,3 +1,5 @@
+using ChatBySignalR.Server.Hubs;
+using ChatBySignalR.Shared;
 using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -31,6 +34,7 @@ app.UseRouting();
 
 app.MapRazorPages();
 app.MapControllers();
+app.MapHub<ChatHub>(ChatClient.SignalRHubUrl);
 app.MapFallbackToFile("index.html");
 
 app.Run();
